@@ -1,3 +1,5 @@
+const fs = require('fs');
+
 function findAllIndexes (letter, string) {
     const positions = [];
 
@@ -58,8 +60,20 @@ function bookCipher(passage, message) {
     return encryptedMessage;
 }
 
-const passage = 'something is happening. Test test. \nThe quick brown fox jumped over the lazy dog.';
-const message = 'cameron';
-const encryptedMessage = bookCipher(passage, message);
+const fileName = process.argv[2];
+const message = process.argv[3];
 
-console.log(encryptedMessage);
+if (!fileName || !message) {
+    console.error('Please provide a file for encryption and a message to encrypt. Format: node book.js [fileName] [message]');
+    return;
+}
+
+fs.readFile(`book/${fileName}`, 'utf8', (err, passage) => {
+    if (err) {
+        console.error(`Failed to open file ${fileName}`);
+        return;
+    }
+    
+    const encryptedMessage = bookCipher(passage, message);
+    console.log(encryptedMessage);
+});
