@@ -60,20 +60,49 @@ function bookCipher(passage, message) {
     return encryptedMessage;
 }
 
+function decryptBookCipher (passage, message) {
+    const passageSplit = passage.split("\n");
+    const messageSplit = message.split(" ");
+    let decryptedMessage = "";
+
+    messageSplit.forEach(letterKey => {
+        const letterKeySplit = letterKey.split(":");
+        
+        if (letterKeySplit.length <= 1){
+            decryptedMessage += letterKeySplit[0];
+            return;
+        }
+
+        const line = letterKeySplit[0];
+        const letter = letterKeySplit[1];
+
+        decryptedMessage += passageSplit[line][letter];
+    });
+
+    return decryptedMessage;
+}
+
 const fileName = process.argv[2];
 const message = process.argv[3];
+const decrypt = process.argv[4];
 
 if (!fileName || !message) {
     console.error('Please provide a file for encryption and a message to encrypt. Format: node book.js [fileName] [message]');
     return;
 }
 
-fs.readFile(`book/${fileName}`, 'utf8', (err, passage) => {
+fs.readFile(fileName, 'utf8', (err, passage) => {
     if (err) {
         console.error(`Failed to open file ${fileName}`);
         return;
     }
     
+    if (decrypt === "-d") {
+        const decryptedMessage = decryptBookCipher(passage, message);
+        console.log(decryptedMessage);
+        return;
+    }
+
     const encryptedMessage = bookCipher(passage, message);
     console.log(encryptedMessage);
 });
