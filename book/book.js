@@ -41,9 +41,16 @@ function bookCipher(passage, message) {
             return;
         }
 
-        const randomLine = Math.floor(Math.random() * allPositionsOfLetter.length);
-        const randomPositionIndex = Math.floor(Math.random() * allPositionsOfLetter[randomLine].length);
-        const randomPosition = allPositionsOfLetter[randomLine][randomPositionIndex];
+        const filteredAllPositionsOfLetter = allPositionsOfLetter.filter(line => line.length > 0);
+
+        if (!filteredAllPositionsOfLetter.length) {
+            encryptedMessage += letter;
+            return;
+        }
+
+        const randomLine = Math.floor(Math.random() * filteredAllPositionsOfLetter.length);
+        const randomPositionIndex = Math.floor(Math.random() * filteredAllPositionsOfLetter[randomLine].length);
+        const randomPosition = filteredAllPositionsOfLetter[randomLine][randomPositionIndex];
         
         encryptedMessage += " " + randomPosition;
     });
