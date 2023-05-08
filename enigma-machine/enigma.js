@@ -2,6 +2,7 @@ const Rotor = require('./rotor.js');
 const Plugboard = require('./plugboard.js');
 const rotors = require('./config/rotorConfig.js');
 const plugboardConfig = require('./config/plugboardConfig.js');
+const ALPHABET = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
 
 class Enigma {
     #firstRotor = null;
@@ -22,6 +23,10 @@ class Enigma {
 
     enter (letter) {
         let convertedLetter = letter.toUpperCase();
+        
+        if (!ALPHABET.includes(convertedLetter)) {
+            return convertedLetter;
+        }
 
         convertedLetter = this.#plugboard.convert(convertedLetter);
         convertedLetter = this.#firstRotor.getLetter(convertedLetter);

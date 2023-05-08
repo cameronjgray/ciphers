@@ -6,9 +6,18 @@ class Plugboard {
     }
 
     convert (letter) {
-        const convertedLetter = this.#settings[letter];
+        const keysIndex = Object.keys(this.#settings).findIndex(keyLetter => keyLetter === letter);
+        const valuesIndex = Object.values(this.#settings).findIndex(valueLetter => valueLetter === letter);
 
-        return convertedLetter ?? letter;
+        if (keysIndex >= 0) {
+            return Object.values(this.#settings)[keysIndex];
+        }
+        else if (valuesIndex >=0) {
+            return Object.keys(this.#settings)[valuesIndex];
+        }
+        else {
+            return letter;
+        }
     }
 }
 
