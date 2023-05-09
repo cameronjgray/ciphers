@@ -45,4 +45,13 @@ This would become:
 ```
 These ciphers have commonly used a bible verse in the past. The longer the passage the stronger the encryption but the longer it takes to decrypt at the other end. Maybe best to just use `book.js` with the `-d` flag! :wink:
 
+## Enigma Machine
+This is a virtual version of the Enigma machine that was used in WW2 by the Germans and that Alan Turing and his team managed to crack. With it being such an important piece of computer history I wanted to try and re-create one.
+
+The machine has 2 parts: the rotors and the plugboard. When a letter is pressed it goes through the plugboard, then through the rotors and then back through the plugboard. The rotors are just simple substiution ciphers and the plugboard is just 10 letter pairs that swap one letter for another. Despite all this the level of encryption is pretty staggering for the time.
+
+I built the machine using classes and modelled it after the real life one but in theory you could give it as many rotors as you want! The data structure I used for the rotors was a linked list but other than that the machine is pretty straight forward.
+
+Note: there is currently a small issue with longer strings being passed to the machine due to the incrementation of the rotors but I'm working on it :sweat_smile:
+
 Happy Encrypting!
