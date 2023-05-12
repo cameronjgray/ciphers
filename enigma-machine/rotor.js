@@ -7,43 +7,39 @@ class Rotor {
 
     constructor (startingPosition, nextRotor) {
         this.#offset = startingPosition;
-        let i = startingPosition;
+        
+        let offset = startingPosition;
 
-        i = this.#setupRotorHalf(i, this.#firstHalf);
-        i = this.#setupRotorHalf(i, this.#secondHalf);
+        for(let i = 0; i < this.#ALPHABET.length; i++) {
+            if (this.#firstHalf.length < this.#ALPHABET.length / 2) {
+                this.#firstHalf.push(this.#ALPHABET[offset]);
+            }
+            else {
+                this.#secondHalf.push(this.#ALPHABET[offset]);
+            }
+
+            offset++;
+            
+            if(offset === this.#ALPHABET.length) {
+                offset = 0;
+            }
+        }
 
         if (nextRotor) {
             this.#nextRotor = nextRotor;
         }
-    }
 
-    #setupRotorHalf (startingPosition, rotorHalf) {
-        let i = startingPosition;
-
-        while (rotorHalf.length < this.#ALPHABET.length / 2) {
-            const letter = this.#ALPHABET[i];
-
-            if (letter) {
-                rotorHalf.push(letter);
-                i++;
-            }
-            else {
-                rotorHalf.push(this.#ALPHABET[0]);
-                i = 1;
-            }
-        }
-
-        return i;
+        console.log(this.#firstHalf, this.#secondHalf);
     }
     
     increment () {
-        const newFirstHalf = [this.#secondHalf[0], ...this.#firstHalf.slice(1, this.#firstHalf.length)];
-        const newSecondHalf = [...this.#secondHalf.slice(1), this.#firstHalf[this.#firstHalf.length - 1]];
+        const firstHalfDrop = this.#firstHalf[0];
+        const secondHalfDrop = this.#secondHalf[this.#secondHalf.length - 1];
 
-        this.#firstHalf = newFirstHalf;
-        this.#secondHalf = newSecondHalf;
+        this.#firstHalf = [ ...this.#firstHalf.slice(1), secondHalfDrop ];
+        this.#secondHalf = [firstHalfDrop, ...this.#secondHalf.slice(0, this.#secondHalf.length - 1)];
         
-        this.#offset++;
+        this.#offset += 1;
 
         if (this.#offset > this.#ALPHABET.length - 1) {
             this.#offset = 0;
@@ -57,6 +53,8 @@ class Rotor {
     getLetter (letter) {
         const firstHalfIndex = this.#firstHalf.findIndex(firstHalfLetter => firstHalfLetter === letter);
         const secondHalfIndex = this.#secondHalf.findIndex(secondHalfLetter => secondHalfLetter === letter);
+        
+        console.log(firstHalfIndex, secondHalfIndex);
 
         if (firstHalfIndex >= 0) {
             return this.#secondHalf[firstHalfIndex];

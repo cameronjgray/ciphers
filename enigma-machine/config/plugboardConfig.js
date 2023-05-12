@@ -1,14 +1,14 @@
 const plugboardConfig = {
-    'A': 'Y',
-    'B': 'X',
-    'C': 'Z',
-    'E': 'S',
-    'F': 'G',
-    'L': 'N',
-    'O': 'Q',
-    'R': 'J',
-    'Z': 'K',
-    'M': 'D',
+    'A': 'K',
+    'B': 'L',
+    'C': 'M',
+    'D': 'N',
+    'E': 'O',
+    'F': 'P',
+    'G': 'Q',
+    'H': 'R',
+    'I': 'S',
+    'J': 'T',
 }
 
 module.exports = plugboardConfig;
